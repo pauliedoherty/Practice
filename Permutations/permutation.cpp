@@ -24,10 +24,13 @@ int main()
     printf("Enter test string...\n");
     scanf("%s", testString);
 
-    sort(testString, testLength);
     bool result;
     result = checkPerms(masterString, masterLength, testString, testLength);
     cout << "Master string contains permutation of sub string: " << result << endl;
+
+    delete [] masterString;
+    delete [] testString;
+    return 0;
 }
 
 bool checkPerms(char* masterStr, int masterLen, char* testStr, int testLen)
@@ -42,7 +45,7 @@ bool checkPerms(char* masterStr, int masterLen, char* testStr, int testLen)
     }
     bool mismatchFound;
     int countMatchedChars;
-    char* subStr = new  char[testLen];
+    char* subStr = new char[testLen];
     sort(testStr, testLen);
     for(int i = 0; i < (masterLen - testLen + 1); i++)
     {
@@ -61,9 +64,13 @@ bool checkPerms(char* masterStr, int masterLen, char* testStr, int testLen)
             }
             mismatchFound = true;
         }
-        if(countMatchedChars == testLen)
+        if(countMatchedChars == testLen){
+            delete [] subStr;
             return true;
+        }
     }
+    delete [] subStr;
+    return false;
 }
 
 template<class T>
